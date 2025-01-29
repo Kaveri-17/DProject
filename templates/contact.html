@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Contact Us</h1>
+    <form action="{{ url_for('contact') }}" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone">
+        </div>
+        <div>
+            <label for="program">Interested Program:</label>
+            <select id="program" name="program">
+                <option value="Internship">Internship</option>
+                <option value="Bootcamp">Bootcamp</option>
+                <option value="WorkShop">WorkShop</option>
+            </select>
+        </div>
+        <div>
+            <label for="batch">Batch:</label>
+            <select id="batch" name="batch">
+                <option value="Batch 1">Batch 1</option>
+                <option value="Batch 2">Batch 2</option>
+                <option value="Batch 3">Batch 3</option>
+                <option value="Batch 4">Batch 4</option>
+            </select>
+        </div>
+        <div>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" cols="40"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
