@@ -1,0 +1,24 @@
+
+
+  {
+    "builds": [
+      {
+        "src": "app.py",
+        "use": "@vercel/python",
+        "config": {
+          "maxDuration": 10
+        }
+      }
+    ],
+    "env": {
+      "MYSQL_CLIENT": "mysqlclient"
+    },
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/app.py"
+      }
+    ]
+  }
+  
+  

@@ -5,6 +5,14 @@ from flask_dance.contrib.github import make_github_blueprint, github
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin
 import hashlib
 import re
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()  # Load environment variables from .env file
+
+# This allows you to use MySQLdb like mysqlclient
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -155,17 +163,28 @@ def register():
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        try:
-            cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO contacts (name, email, phone, program, batch, message) VALUES (%s, %s, %s, %s, %s, %s)",
-                        (request.form['name'], request.form['email'], request.form['phone'],
-                         request.form['program'], request.form['batch'], request.form['message']))
-            mysql.connection.commit()
-            cur.close()
-            flash("Message sent successfully!", "success")
-        except Exception as e:
-            flash(f"Error: {str(e)}", "danger")
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+        program = request.form['program']
+        batch = request.form['batch']
+        message = request.form['message']
+
+        # Insert data into contacts table
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO contacts (name, email, phone, program, batch, message) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, phone, program, batch, message))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('success'))  # Redirect to success page
+
     return render_template('contact.html')
+
+# Success route after contact form submission
+@app.route('/success')
+def success():
+    return "Your message has been sent successfully!"
+
 
 @app.route('/index')
 @login_required
