@@ -1,60 +1,50 @@
-# from flask import Flask
-# from flask_mysqldb import MySQL
+from flask_pymongo import PyMongo
+from flask_login import UserMixin
+from bson.objectid import ObjectId
 
-# # Initialize Flask app and MySQL
-# app = Flask(__name__)
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = 'Kaveri@1'
-# app.config['MYSQL_DB'] = 'dwebb'
+# Initialize MongoDB (This will be set up in your main Flask app)
+mongo = None  # This will be assigned in the app setup
 
-# mysql = MySQL(app)
+class User(UserMixin):
+    def __init__(self, id, username, email, provider=None, provider_id=None):
+        self.id = str(id)
+        self.username = username
+        self.email = email
+        self.provider = provider
+        self.provider_id = provider_id
 
-# # Account Model for 'accounts' table
-# class Account:
-#     def __init__(self, id, username, password, email):
-#         self.id = id
-#         self.username = username
-#         self.password = password
-#         self.email = email
+    @classmethod
+    def get_by_provider_id(cls, provider, provider_id):
+        user_data = mongo.db.accounts.find_one({'provider': provider, 'provider_id': provider_id})
+        if user_data:
+            return cls(user_data['_id'], user_data['username'], user_data['email'], provider, provider_id)
+        return None
 
-#     @staticmethod
-#     def get_account_by_username_and_password(username, password):
-#         # SQL query to fetch the account by username and password
-#         cur = mysql.connection.cursor()
-#         cur.execute("SELECT * FROM accounts WHERE username = %s AND password = %s", (username, password))
-#         account = cur.fetchone()
-#         cur.close()
+    @classmethod
+    def get_by_id(cls, user_id):
+        user_data = mongo.db.accounts.find_one({'_id': ObjectId(user_id)})
+        if user_data:
+            return cls(user_data['_id'], user_data['username'], user_data['email'], user_data.get('provider'), user_data.get('provider_id'))
+        return None
 
-#         if account:
-#             # Return an Account instance with the database data
-#             return Account(id=account[0], username=account[1], password=account[2], email=account[3])
-#         return None
+    @classmethod
+    def create(cls, username, email, password=None, provider=None, provider_id=None):
+        user_data = {
+            'username': username,
+            'email': email,
+            'provider': provider,
+            'provider_id': provider_id
+        }
+        if password:
+            from hashlib import sha256
+            user_data['password'] = sha256(password.encode()).hexdigest()
+        
+        mongo.db.accounts.insert_one(user_data)
+        return cls.get_by_provider_id(provider, provider_id) if provider else cls.get_by_id(user_data['_id'])
 
-#     @staticmethod
-#     def create_account(username, password, email):
-#         # SQL query to insert a new account
-#         cur = mysql.connection.cursor()
-#         cur.execute("INSERT INTO accounts (username, password, email) VALUES (%s, %s, %s)", (username, password, email))
-#         mysql.connection.commit()
-#         cur.close()
-
-# # Contact Model for 'contacts' table
-# class Contact:
-#     def __init__(self, id, name, email, phone, program, batch, message):
-#         self.id = id
-#         self.name = name
-#         self.email = email
-#         self.phone = phone
-#         self.program = program
-#         self.batch = batch
-#         self.message = message
-
-#     @staticmethod
-#     def create_contact(name, email, phone, program, batch, message):
-#         # SQL query to insert a new contact message
-#         cur = mysql.connection.cursor()
-#         cur.execute("INSERT INTO contacts (name, email, phone, program, batch, message) VALUES (%s, %s, %s, %s, %s, %s)", 
-#                     (name, email, phone, program, batch, message))
-#         mysql.connection.commit()
-#         cur.close()
+    @classmethod
+    def get_by_username(cls, username):
+        user_data = mongo.db.accounts.find_one({'username': username})
+        if user_data:
+            return cls(user_data['_id'], user_data['username'], user_data['email'], user_data.get('provider'), user_data.get('provider_id'))
+        return None

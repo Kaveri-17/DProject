@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_mysqldb import MySQL
+from flask_pymongo import PyMongo
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.github import make_github_blueprint, github
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin
@@ -8,24 +8,15 @@ import re
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()  # Load environment variables from .env file
-
-# This allows you to use MySQLdb like mysqlclient
-
 
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = 'qehq84tr8yqvuegyasgvdhc1984791#$%^&*()@#$%^&*(DFGHJKVBNM)'
 
-# Database configuration
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Kaveri@1'
-app.config['MYSQL_DB'] = 'dwebb'
-
-# Initialize MySQL
-mysql = MySQL(app)
+# MongoDB configuration
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/dwebb'  # replace with your database name
+mongo = PyMongo(app)
 
 # Initialize LoginManager
 login_manager = LoginManager(app)
@@ -43,18 +34,6 @@ github_bp = make_github_blueprint(client_id='GITHUB_CLIENT_ID',
                                    redirect_to='github_login')
 app.register_blueprint(github_bp, url_prefix='/github_login')
 
-# Ensure database connectivity
-@app.before_request
-def check_database_connection():
-    try:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT 1')
-        cur.close()
-        print(f"Connected to {app.config['MYSQL_DB']} successfully!")
-    except Exception as e:
-        print(f"Database connection error: {e}")
-
-
 # User model
 class User(UserMixin):
     def __init__(self, id, username, email, provider=None, provider_id=None):
@@ -66,27 +45,17 @@ class User(UserMixin):
 
     @classmethod
     def get_by_provider_id(cls, provider, provider_id):
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM accounts WHERE provider = %s AND provider_id = %s", (provider, provider_id))
-        user_data = cur.fetchone()
-        cur.close()
-        return cls(*user_data) if user_data else None
+        user_data = mongo.db.accounts.find_one({'provider': provider, 'provider_id': provider_id})
+        return cls(user_data['_id'], user_data['username'], user_data['email']) if user_data else None
 
     @classmethod
     def get_by_id(cls, user_id):
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM accounts WHERE id = %s", (user_id,))
-        user_data = cur.fetchone()
-        cur.close()
-        return cls(*user_data) if user_data else None
+        user_data = mongo.db.accounts.find_one({'_id': user_id})
+        return cls(user_data['_id'], user_data['username'], user_data['email']) if user_data else None
 
     @classmethod
     def create(cls, username, email, provider, provider_id):
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO accounts (username, email, provider, provider_id) VALUES (%s, %s, %s, %s)",
-                    (username, email, provider, provider_id))
-        mysql.connection.commit()
-        cur.close()
+        mongo.db.accounts.insert_one({'username': username, 'email': email, 'provider': provider, 'provider_id': provider_id})
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -100,14 +69,11 @@ def login():
     if request.method == 'POST':
         username, password = request.form['username'], request.form['password']
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM accounts WHERE username = %s", (username,))
-        account = cur.fetchone()
-        cur.close()
-        if account and account[2] == hashed_password:
-            session['loggedin'], session['id'], session['username'] = True, account[0], account[1]
-            login_user(User(account[0], account[1], account[3]))
-            return redirect(url_for('index'))
+        account = mongo.db.accounts.find_one({'username': username, 'password': hashed_password})
+        if account:
+            session['loggedin'], session['id'], session['username'] = True, account['_id'], account['username']
+            login_user(User(account['_id'], account['username'], account['email']))
+            return render_template('index.html', msg=msg)
         msg = 'Incorrect username/password!'
     return render_template('login.html', msg=msg)
 
@@ -146,18 +112,18 @@ def register():
     msg = ''
     if request.method == 'POST':
         username, password, email = request.form['username'], request.form['password'], request.form['email']
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM accounts WHERE username = %s", (username,))
-        if cur.fetchone():
+        existing_user = mongo.db.accounts.find_one({'username': username})
+        if existing_user:
             msg = 'Account already exists!'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email) or not re.match(r'[A-Za-z0-9]+', username):
             msg = 'Invalid email/username!'
         else:
-            cur.execute("INSERT INTO accounts (username, password, email) VALUES (%s, %s, %s)",
-                        (username, hashlib.sha256(password.encode()).hexdigest(), email))
-            mysql.connection.commit()
+            mongo.db.accounts.insert_one({
+                'username': username,
+                'password': hashlib.sha256(password.encode()).hexdigest(),
+                'email': email
+            })
             msg = 'Registration successful!'
-        cur.close()
     return render_template('register.html', msg=msg)
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -170,11 +136,15 @@ def contact():
         batch = request.form['batch']
         message = request.form['message']
 
-        # Insert data into contacts table
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO contacts (name, email, phone, program, batch, message) VALUES (%s, %s, %s, %s, %s, %s)", (name, email, phone, program, batch, message))
-        mysql.connection.commit()
-        cur.close()
+        # Insert data into contacts collection
+        mongo.db.contacts.insert_one({
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'program': program,
+            'batch': batch,
+            'message': message
+        })
 
         return redirect(url_for('success'))  # Redirect to success page
 
@@ -185,7 +155,6 @@ def contact():
 def success():
     return "Your message has been sent successfully!"
 
-
 @app.route('/index')
 @login_required
 def index():
@@ -193,3 +162,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -2,35 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
-
-        <!-- Display error message if login fails -->
-        {% if msg %}
-            <p class="error-message" style="color: red;">{{ msg }}</p>
-        {% endif %}
-
-        <form method="POST" action="{{ url_for('login') }}">
-            <div class="form-group">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form method="POST">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Username" required>
-            </div>
-            <div class="form-group">
+                <input type="text" id="username" name="username" required>
+
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+                {% if msg %}
+                    <div class="error">{{ msg }}</div>
+                {% endif %}
+            </form>
+            <div class="social-login">
+                <a href="{{ url_for('google.login') }}">Login with Google</a>
+                <a href="{{ url_for('github.login') }}">Login with GitHub</a>
             </div>
-            <button type="submit">Login</button>
-        </form>
-
-        <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
-
-        <div class="social-login">
-            <a href="{{ url_for('google.login') }}">Login with Google</a><br>
-            <a href="{{ url_for('github.login') }}">Login with GitHub</a>
+            <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
         </div>
     </div>
 </body>
