@@ -63,6 +63,9 @@ def load_user(user_id):
 
 # Routes
 @app.route('/')
+def index0():
+    return render_template('home.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = ''
@@ -105,7 +108,7 @@ def github_login():
 def logout():
     session.clear()
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('index0'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
