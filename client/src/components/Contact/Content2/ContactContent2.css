@@ -1,0 +1,183 @@
+/* Add this keyframes animation */
+@keyframes moveUpDown {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+        /* Adjust this value to control the movement */
+    }
+}
+
+.wave-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 100vh;
+    margin-top: 0px;
+}
+
+.waves {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(-1);
+}
+
+.login-form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 100%;
+    max-width: 450px;
+    padding: 0px;
+    margin-top: -18px;
+    display: flex;
+    align-items: center;
+}
+
+.form-image {
+    margin-left: 20px;
+    width: 150px;
+    height: auto;
+    border-radius: 60px;
+    /* Add the animation to the form-image */
+    animation: moveUpDown 2s infinite ease-in-out;
+}
+
+.login-form {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Share Tech', Helvetica, Arial, Lucida, sans-serif;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    border-radius: 0;
+    font-size: 1rem;
+}
+
+.login-button {
+    font-family: 'Share Tech', Helvetica, Arial, Lucida, sans-serif;
+
+    background-color: #ff9c00;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #e67e22;
+}
+
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .waves {
+        height: auto;
+        transform: none;
+    }
+
+    .login-form-container {
+
+        max-width: 90%;
+    }
+
+    .form-image {
+        margin-right: 20px;
+        width: 100px;
+        height: auto;
+    }
+
+    .login-form {
+        flex: 1;
+        padding: 2rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.9rem;
+    }
+
+    .login-button {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .waves {
+        height: auto;
+        transform: none;
+    }
+
+    .login-form-container {
+        max-width: 90%;
+    }
+
+    .form-image {
+        margin-right: 20px;
+        width: 80px;
+        height: auto;
+    }
+
+    .login-form {
+        flex: 1;
+        padding: 2rem;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.8rem;
+    }
+
+    .login-button {
+        font-size: 0.8rem;
+    }
+}

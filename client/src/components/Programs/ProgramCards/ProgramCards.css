@@ -1,0 +1,110 @@
+/* Tabs container */
+.tabs {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 2rem;
+}
+
+/* Tab Header */
+.tab-header {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #ccc;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+}
+
+.tab-button.active {
+    font-weight: bold;
+    border-bottom: 3px solid rgba(41, 17, 96, 0.8);
+    color: rgba(41, 17, 96, 0.8);
+}
+
+/* Tab Content */
+.tab-content {
+    margin-top: 20px;
+    flex: 1;
+    padding: 10px;
+}
+
+/* Tab Section */
+.tab-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.tab-section iframe {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    border: none;
+}
+
+/* Heading and Paragraph Styles */
+.h2-programcard {
+    font-size: 2.5rem;
+    text-align: center;
+    font-family: 'Share Tech', Helvetica, Arial, Lucida, sans-serif;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.p-programcard {
+    font-size: 1rem;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tab-header {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .tab-section {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .h2-programcard {
+        font-size: 1.8rem;
+    }
+
+    .p-programcard {
+        font-size: 0.9rem;
+    }
+
+    .tab-section iframe {
+        width: 100%;
+        height: 200px;
+    }
+
+    .tab-content {
+        padding: 5px;
+    }
+}

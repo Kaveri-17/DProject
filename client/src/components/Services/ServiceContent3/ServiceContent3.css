@@ -1,0 +1,112 @@
+/* Hero Section Styling */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 1rem;
+    font-family: 'Share Tech', Helvetica, Arial, Lucida, sans-serif;
+    margin-top: 0;
+}
+
+/* Content Inside Ellipse */
+.content {
+    max-width: 600px;
+    text-align: left;
+    z-index: 3;
+    padding: 0 1rem;
+    margin: 0 auto;
+}
+
+/* Heading Styling */
+.content h1 {
+    font-size: 2rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Share Tech', Helvetica, Arial, Lucida, sans-serif;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .content h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .content h1 {
+        font-size: 4rem;
+    }
+}
+
+/* Paragraph Styling */
+.content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: white;
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .content p {
+        font-size: 1.2rem;
+    }
+}
+
+/* CTA Button Styling */
+.cta-button {
+    background: #ff9c00;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.cta-button:hover {
+    background: #ff7a00;
+}
+
+@media (min-width: 768px) {
+    .cta-button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        padding: 1rem 0;
+    }
+
+    .content {
+        max-width: 100%;
+    }
+
+    .cta-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .content h1 {
+        font-size: 1.5rem;
+        margin-top: 20px;
+    }
+
+    .content p {
+        font-size: 0.9rem;
+    }
+
+    .cta-button {
+        padding: 12px 25px;
+    }
+}

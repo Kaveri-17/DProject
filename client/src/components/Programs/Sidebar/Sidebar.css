@@ -1,0 +1,92 @@
+/* General Sidebar Styling */
+.sidebar {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+    width: 50px;
+    background-color: rgb(250, 246, 246);
+    transition: width 0.3s ease;
+    border-radius: 30px;
+    padding: 20px;
+    margin-right: 10px;
+}
+
+.disc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Individual Disc Styling */
+.disc-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.disc {
+    width: 12px;
+    height: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.disc.active {
+    background-color: #5d9716;
+    transform: scale(1.2);
+}
+
+/* Connecting Line Styling */
+.line {
+    width: 2px;
+    height: 20px;
+    background-color: #bbb;
+    position: relative;
+    z-index: 0;
+}
+
+.disc.active+.line {
+    background-color: #00a859;
+}
+
+/* Sidebar Content Styling */
+.sidebar-content {
+    display: none;
+    position: absolute;
+    top: -10px;
+    right: 60px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.disc-wrapper:hover .sidebar-content {
+    display: block;
+}
+
+/* Responsive Sidebar */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        right: 0;
+        width: 40px;
+    }
+
+    .disc-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

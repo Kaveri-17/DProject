@@ -1,0 +1,58 @@
+.sidebar {
+    position: fixed;
+    top: 20%;
+    right: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 15px;
+    width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.sidebar p {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+    position: relative;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.sidebar ul li.active a {
+    color: black;
+    font-weight: bold;
+}
+
+.sidebar ul li.active {
+    color: green;
+}
+
+.marker {
+    position: absolute;
+    width: 5px;
+    height: 20px;
+    background-color: green;
+    border-radius: 10px;
+    left: -10px;
+    transition: top 0.3s ease;
+}

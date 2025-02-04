@@ -1,0 +1,138 @@
+/* Main container */
+.service-section {
+    min-height: 100vh;
+    position: relative;
+    margin-top: -50px;
+}
+
+.service-wrapper {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+}
+
+.service-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 4rem;
+    align-items: center;
+}
+
+/* Service Info Section */
+.service-info {
+    width: 100%;
+}
+
+.service-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #000;
+}
+
+.service-description {
+    color: #333;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Accordion Styles */
+.accordion-wrapper {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.accordion-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    background-color: rgb(209, 213, 219);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.accordion-title {
+    color: #000;
+    font-weight: 500;
+}
+
+.accordion-icon {
+    color: #000;
+    font-size: 1.25rem;
+}
+
+.accordion-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content-inner {
+    padding: 1rem 0.5rem;
+    color: #333;
+}
+
+/* Image Section */
+.service-image-container {
+    width: 100%;
+}
+
+.service-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Wave Shape */
+.wave-shape-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.wave-shape {
+    position: relative;
+    width: 100%;
+    height: 120px;
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+    .service-layout {
+        flex-direction: row;
+    }
+
+    .service-info {
+        width: 50%;
+    }
+
+    .service-image-container {
+        width: 50%;
+    }
+}
+
+@media (mix-width: 400px) {
+    .service-layout {
+        flex-direction: row;
+        margin-top: -10px;
+    }
+
+    .service-info {
+        width: 50%;
+    }
+
+    .service-image-container {
+        width: 50%;
+    }
+}

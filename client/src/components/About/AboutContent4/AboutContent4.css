@@ -1,0 +1,70 @@
+/* Container Styles */
+.about-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.about-heading {
+    color: black;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Grid Layout */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Default: 4 columns */
+    gap: 20px;
+    margin: 0 auto;
+}
+
+/* Card Styles */
+.team-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    /* Subtle hover effect */
+}
+
+/* Image Styles */
+.team-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* Text Styles */
+.team-name {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.team-designation {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: repeat(1, 1fr);
+        /* 1 column on mobile */
+    }
+}

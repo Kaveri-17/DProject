@@ -1,0 +1,44 @@
+.about-container {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 50px 0;
+}
+
+.custom-rounded-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    z-index: -1;
+    background-color: #0a2540;
+    border-radius: 50% 0 0 50%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 20px 0;
+        /* Adjust padding for smaller screens */
+    }
+
+    .custom-rounded-bg {
+        width: 95%;
+        left: 2.5%;
+        border-radius: 40% 0 0 40%;
+        /* Adjust border radius */
+    }
+
+    .counter-container {
+        display: flex;
+        flex-direction: column;
+        /* Stack counters vertically */
+        gap: 20px;
+    }
+
+    .counter p {
+        font-size: 1rem;
+        /* Adjust font size for smaller screens */
+    }
+}

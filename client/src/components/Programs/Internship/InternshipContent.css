@@ -1,0 +1,100 @@
+/* Responsive Internship Image */
+.internship-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+/* Main Internship Container */
+.main-internship {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white !important;
+    padding: 1rem;
+    margin-left: 200px;
+}
+
+/* CTA Button */
+.cta-button {
+    background-color: #ff9c00;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #e67e22;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-internship {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .hero-section {
+        display: flex;
+        flex-direction: column-reverse;
+        /* Image first, then content */
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .hero-section div {
+        margin-bottom: 1rem;
+    }
+
+    .hero-section img {
+        margin: 0 auto;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .hero-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero-section p {
+        font-size: 0.9rem;
+    }
+
+    .hero-section button {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .main-internship {
+        margin-left: 200px;
+    }
+
+    .hero-section {
+        display: flex;
+        flex-direction: row;
+        /* Default direction for larger screens */
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem;
+    }
+
+    .hero-section div {
+        flex: 1;
+        margin-right: 2rem;
+    }
+
+    .hero-section img {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,83 @@
+.content-section {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #15314e;
+    color: #fff;
+    padding: 2rem 1rem;
+    align-items: center;
+    justify-content: space-around;
+    /* Adds better alignment for larger screens */
+    gap: 1.5rem;
+    /* Space between elements */
+    text-align: center;
+}
+
+.text-content {
+    flex: 1;
+    min-width: 320px;
+    max-width: 600px;
+    /* Limits the width for better readability */
+    padding: 1rem;
+}
+
+.text-content h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    /* Responsive font sizing */
+    font-family: 'Share Tech', Helvetica, Arial, Lucida, sans-serif;
+
+}
+
+.text-content p {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    /* Responsive font sizing */
+    margin: 1rem auto;
+    line-height: 1.5;
+}
+
+.cta-button {
+    background-color: #ff9c00;
+    color: white;
+    padding: 12px 20px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    /* Responsive button font size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.cta-button:hover {
+    background-color: #e67e22;
+}
+
+.image-content {
+    flex: 1;
+    min-width: 320px;
+    max-width: 600px;
+    /* Prevents excessive width on larger screens */
+    padding: 1rem;
+}
+
+.image-content img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    /* Adds subtle rounding for a polished look */
+    filter: brightness(0.9);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-section {
+        flex-direction: column;
+    }
+
+    .text-content,
+    .image-content {
+        max-width: 100%;
+        /* Ensures full-width content on smaller screens */
+        text-align: center;
+    }
+}

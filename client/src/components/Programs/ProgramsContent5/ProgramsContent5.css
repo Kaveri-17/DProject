@@ -1,0 +1,83 @@
+/* General Container Styling */
+.programs-content5-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.programs-content5 {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Left Section (Image) */
+.left-section {
+    flex: 1;
+}
+
+.left-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Right Section (Content) */
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.right-section p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.links a {
+    display: block;
+    margin-bottom: 10px;
+    color: #15314e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Styling for Smaller Screens */
+@media screen and (max-width: 768px) {
+    .programs-content5 {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .right-section {
+        text-align: center;
+    }
+
+    .right-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .right-section p {
+        font-size: 0.9rem;
+    }
+
+    .links a {
+        font-size: 0.9rem;
+    }
+}
