@@ -19,12 +19,24 @@
 
                 <label for="phone">Phone</label>
                 <input type="text" id="phone" name="phone" required>
-
+                
                 <label for="program">Program</label>
-                <input type="text" id="program" name="program" required>
-
+                <select id="program" name="program" required>
+                    <option value="" disabled selected>Select a program</option>
+                    <option value="Internship">Internship</option>
+                    <option value="BootCamp">BootCamp</option>
+                    <option value="WorkShop">WorkShop</option>
+                </select>
+                
                 <label for="batch">Batch</label>
-                <input type="text" id="batch" name="batch" required>
+                <select id="batch" name="batch" required>
+                    <option value="" disabled selected>Select a batch</option>
+                    <option value="2021-2025">2021-2025</option>
+                    <option value="2022-2026">2022-2026</option>
+                    <option value="2023-2027">2023-2027</option>
+                    <option value="2024-2028">2024-2028</option>
+                    <option value="Other">Other</option>
+                </select>
 
                 <label for="message">Message</label>
                 <textarea id="message" name="message" required></textarea>
@@ -35,3 +47,4 @@
     </div>
 </body>
 </html>
+

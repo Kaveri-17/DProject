@@ -10,21 +10,29 @@
     <div class="container">
         <div class="form-container">
             <h2>Register</h2>
-            <form method="POST">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-
-                <button type="submit">Register</button>
+            <form method="POST" class="register-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+            
+                <button type="submit" class="btn">Register</button>
+            
                 {% if msg %}
-                    <div class="error">{{ msg }}</div>
+                    <div class="error-message">{{ msg }}</div>
                 {% endif %}
             </form>
+            
             <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
         </div>
     </div>

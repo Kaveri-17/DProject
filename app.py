@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_pymongo import PyMongo
 from flask_dance.contrib.google import make_google_blueprint, google
@@ -7,6 +8,9 @@ import hashlib
 import re
 from dotenv import load_dotenv
 import os
+
+# Import the User model from models.py
+from models import User
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -34,32 +38,9 @@ github_bp = make_github_blueprint(client_id='GITHUB_CLIENT_ID',
                                    redirect_to='github_login')
 app.register_blueprint(github_bp, url_prefix='/github_login')
 
-# User model
-class User(UserMixin):
-    def __init__(self, id, username, email, provider=None, provider_id=None):
-        self.id = id
-        self.username = username
-        self.email = email
-        self.provider = provider
-        self.provider_id = provider_id
-
-    @classmethod
-    def get_by_provider_id(cls, provider, provider_id):
-        user_data = mongo.db.accounts.find_one({'provider': provider, 'provider_id': provider_id})
-        return cls(user_data['_id'], user_data['username'], user_data['email']) if user_data else None
-
-    @classmethod
-    def get_by_id(cls, user_id):
-        user_data = mongo.db.accounts.find_one({'_id': user_id})
-        return cls(user_data['_id'], user_data['username'], user_data['email']) if user_data else None
-
-    @classmethod
-    def create(cls, username, email, provider, provider_id):
-        mongo.db.accounts.insert_one({'username': username, 'email': email, 'provider': provider, 'provider_id': provider_id})
-
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get_by_id(user_id)
+    return User.get_by_id(mongo, user_id)
 
 # Routes
 @app.route('/')
@@ -87,7 +68,7 @@ def google_login():
     google_info = google.get('/plus/v1/people/me').json()
     user = User.get_by_provider_id('google', google_info['id'])
     if not user:
-        User.create(google_info['displayName'], google_info['emails'][0]['value'], 'google', google_info['id'])
+        User.create(mongo, google_info['displayName'], google_info['emails'][0]['value'], 'google', google_info['id'])
         user = User.get_by_provider_id('google', google_info['id'])
     login_user(user)
     return redirect(url_for('index'))
@@ -99,7 +80,7 @@ def github_login():
     user_data = github.get('/user').json()
     user = User.get_by_provider_id('github', user_data['id'])
     if not user:
-        User.create(user_data['login'], user_data['email'], 'github', user_data['id'])
+        User.create(mongo, user_data['login'], user_data['email'], 'github', user_data['id'])
         user = User.get_by_provider_id('github', user_data['id'])
     login_user(user)
     return redirect(url_for('index'))
@@ -165,4 +146,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
